@@ -1,10 +1,9 @@
 import * as webix from 'webix';
 import { toolbar } from './UI/layout/toolbar';
 import { popupMenu } from './UI/layout/popup-menu';
-import { emplWindow } from './UI/windows/employee-table';
+import { emplWindow, renderTable } from './UI/windows/employee-table';
 import { loginForm } from './UI/windows/login-form';
 import { emplPopup } from './UI/windows/employee-add-edit';
-
 
 
 webix.ready(function (): void {
@@ -25,6 +24,7 @@ webix.ready(function (): void {
   webix.ui(popupMenu).hide()
   webix.ui(emplWindow).hide()
   webix.ui(emplPopup).hide()
+  renderTable()
 })
 
 

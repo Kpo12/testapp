@@ -26,16 +26,6 @@ export const emplWindow: webix.ui.windowConfig = {
                     webix.$$("editEmployeeButton").enable()
                     webix.$$("removeEmployeeButton").enable()
                 },
-                'onAfterRender': webix.once(function (): void {
-                    emplEndPoint.getAll().then((res: Response): void => {
-                        res.json().then((data: Employee[])=>{
-                            console.log(data)
-                            let table: webix.ui.datatable = webix.$$("emplTable") as webix.ui.datatable
-                            table.parse(data, 'json')
-                        })
-                    }
-                    )
-                })
             }
         },
         {
@@ -55,18 +45,20 @@ export const emplWindow: webix.ui.windowConfig = {
                     view: "button", value: "Редактировать", id: "editEmployeeButton", disabled: true, on: {
                         "onItemClick": function (): void {
                             showPopup.call(this)
-                            let table: webix.ui.datatable = webix.$$("emplTable") as webix.ui.datatable
                             let form: webix.ui.form = webix.$$("emplForm") as webix.ui.form
-                            form.setValues(table.getSelectedItem())
+                            form.setValues((webix.$$("emplTable") as webix.ui.datatable).getSelectedItem())
                         }
                     }
                 },
                 {
                     view: "button", value: "Удалить", id: "removeEmployeeButton", disabled: true, on: {
                         "onItemClick": (): void => {
-                            let table: webix.ui.datatable = webix.$$("emplTable") as webix.ui.datatable
-                            console.log(table.getSelectedItem().id)
-                            emplEndPoint.delete(table.getSelectedItem().id)
+                            console.log((webix.$$("emplTable") as webix.ui.datatable).getSelectedItem().id)
+                            emplEndPoint.delete((webix.$$("emplTable") as webix.ui.datatable).getSelectedItem().id).then((): void => {
+                                (webix.$$("emplTable") as webix.ui.datatable).remove(
+                                    (webix.$$("emplTable") as webix.ui.datatable).getSelectedItem().id
+                                ); webix.message("Запись удалена")
+                            })
                         }
                     }
                 },
@@ -78,8 +70,16 @@ export const emplWindow: webix.ui.windowConfig = {
 
 // показать форму добавления/редактирования сотрудников
 function showPopup() {
-    let table: webix.ui.datatable = webix.$$("emplTable") as webix.ui.datatable
-    console.log(table.getSelectedItem())
+    console.log((webix.$$("emplTable") as webix.ui.datatable).getSelectedItem())
     webix.$$("emplPopup").show(this.$view)
 }
 
+export function renderTable(): void {
+    emplEndPoint.getAll().then((res: Response): void => {
+        res.json().then((data: Employee[]) => {
+            (webix.$$("emplTable") as webix.ui.datatable).parse(data, 'json');
+            (webix.$$("emplTable") as webix.ui.datatable).refresh()
+        })
+    }
+    )
+}

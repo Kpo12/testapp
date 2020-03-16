@@ -1,6 +1,7 @@
 import * as webix from 'webix';
 import emplEndPoint from '../end-point/empl-end-point';
 import Employee from '../types/employee';
+import { renderTable } from './employee-table';
 
 let form = {
     view: "form",
@@ -17,8 +18,8 @@ let form = {
                 if (this.getParentView().validate()) {
                     let employee: Employee = this.getParentView().getValues()
                     if (this.getParentView().getValues().id) {
-                        emplEndPoint.put(employee).then((): void => { webix.message("Запись обновлена") })
-                    } else emplEndPoint.post(employee).then((): void => { webix.message("Запись создана") })
+                        emplEndPoint.put(employee).then((): void => { renderTable(); webix.message("Запись обновлена") })
+                    } else emplEndPoint.post(employee).then((): void => { renderTable(); webix.message("Запись создана") })
 
                     this.getTopParentView().hide();
                 }

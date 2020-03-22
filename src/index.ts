@@ -12,6 +12,7 @@ webix.ready(function (): void {
     view: "layout",
     id: "root",
     hidden: true,
+    responsive: true,
     rows: [
       {
         view: "layout",

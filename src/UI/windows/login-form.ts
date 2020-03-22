@@ -18,9 +18,8 @@ let form: webix.ui.formConfig = {
         }}
     ],
     rules:{
-        // убраны для отладки, забьл раскоментить
-        // "login":webix.rules.isNotEmpty,
-        // "password":webix.rules.isNotEmpty,
+        "login":webix.rules.isNotEmpty,
+        "password":webix.rules.isNotEmpty,
     },
     elementsConfig:{
         labelPosition:"top",

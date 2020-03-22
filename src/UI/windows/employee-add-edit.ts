@@ -24,15 +24,14 @@ let form = {
                     this.getTopParentView().hide();
                 }
                 else
-                    webix.message({ type: "error", text: "Form data is invalid" });
+                    webix.message({ type: "error", text: "Введены некорректные данные" });
             }
         }
     ],
     rules: {
-        // убраны для отладки, забьл раскоментить
-        //"name":webix.rules.isNotEmpty,
-        //"age":webix.rules.isNotEmpty,
-        //"phone":webix.rules.isNotEmpty,
+        "name":webix.rules.isNotEmpty,
+        "age":webix.rules.isNotEmpty,
+        "phone":webix.rules.isNotEmpty,
     },
     elementsConfig: {
         labelPosition: "top",

@@ -1,5 +1,5 @@
 import * as webix from 'webix';
-import { toolbar } from './UI/layout/toolbar';
+import { toolbar, clockStart } from './UI/layout/toolbar';
 import { popupMenu } from './UI/layout/popup-menu';
 import { emplWindow, renderTable } from './UI/windows/employee-table';
 import { loginForm } from './UI/windows/login-form';
@@ -26,6 +26,7 @@ webix.ready(function (): void {
   webix.ui(emplWindow).hide()
   webix.ui(emplPopup).hide()
   renderTable()
+  clockStart()
 })
 
 
